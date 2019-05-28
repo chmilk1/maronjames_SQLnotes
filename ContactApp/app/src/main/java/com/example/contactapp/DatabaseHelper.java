@@ -42,5 +42,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_ENTRIES);
     }
 
+    public boolean insertData(String name, int phoneNumber, int age){
+        Log.d("MyContactApp", "DatabaseHelper: inserting data");
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cvs = new ContentValues();
+        cvs.put(COLUMN_NAME_CONTACT, name);
+        cvs.put(COLUMN_NAME_PHONE_NUMBER, phoneNumber);
+        cvs.put(COLUMN_NAME_AGE, age);
+        long result = db.insert(TABLE_NAME, null, cvs);
+        if(result == -1){
+            Log.d("MyContactApp", "DatabaseHelper: inserting data - FAILED");
+            return false;
+        } else {
+            Log.d("MyContactApp", "DatabaseHelper: inserting data - PASSED");
+            return true;
+        }
+    }
+
 
 }
