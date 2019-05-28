@@ -1,5 +1,6 @@
 package com.example.contactapp;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -40,4 +41,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_DELETE_ENTRIES);
         db.execSQL(SQL_CREATE_ENTRIES);
     }
+
+
 }
