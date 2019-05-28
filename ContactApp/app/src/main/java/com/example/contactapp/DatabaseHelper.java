@@ -23,17 +23,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABSE_NAME, null, 1);
-        SQLiteDatabase db = this.getWritableDatabase(); //TODO: Remove this testing database
+        //SQLiteDatabase db = this.getWritableDatabase(); //TODO: Remove this testing database
         Log.d("MyContactApp", "DatabaseHelper: constructed database helper");
+
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        Log.d("MyContactApp", "DatabaseHelper: onCreate Ran");
+        db.execSQL(SQL_CREATE_ENTRIES);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        Log.d("MyContactApp", "DatabaseHelper: onUpdate Ran");
+        db.execSQL(SQL_DELETE_ENTRIES);
+        db.execSQL(SQL_CREATE_ENTRIES);
     }
 }
