@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editAge;
     Button addContactButton;
     Button showContantButton;
+    Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 viewData(v);
+            }
+        });
+
+        searchButton = findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchData(v);
             }
         });
 
