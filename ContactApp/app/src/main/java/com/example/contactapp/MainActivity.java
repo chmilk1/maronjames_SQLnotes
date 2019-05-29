@@ -1,7 +1,9 @@
 package com.example.contactapp;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editPhone;
     EditText editAge;
     Button addContactButton;
+    Button showContantButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +39,87 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        showContantButton = findViewById(R.id.showData);
+        showContantButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewData(v);
+            }
+        });
+
         myDB = new DatabaseHelper(this);
         Log.d("MyContactApp", "MainActivity: myDB created");
     }
 
     public void addData(View view){
         Log.d("MyContactApp", "MainActivity: addData called");
-        boolean isInserted = myDB.insertData(editName.getText().toString(), Integer.parseInt(editPhone.getText().toString()), Integer.parseInt(editAge.getText().toString()) );
+        boolean isInserted = myDB.insertData(editName.getText().toString(), editPhone.getText().toString(), editAge.getText().toString() );
         if(isInserted){
             Toast.makeText(this, "Contact Inserted!", Toast.LENGTH_LONG);
         } else {
             Toast.makeText(this, "Contact Insert FAILED.", Toast.LENGTH_LONG);
         }
+    }
+
+    public void viewData(View view){
+        Cursor res = myDB.getAllData();
+
+        if(res.getCount() <= 0){
+            showMessage("No data");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while(res.moveToNext()){
+            sb.append("ID: " + res.getString(0) + "\nName: " + res.getString(1) + "\nPhoneNumber: " + res.getString(2) + "\nAge: " + res.getString(3) +"\n");
+        }
+        showMessage(sb.toString());
+    }
+
+    public void searchData(View view){
+        Cursor res = myDB.getAllData();
+
+        if(res.getCount() <= 0){
+            showMessage("No data");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while(res.moveToNext()){
+            boolean matches = false;
+            if(editName.getText().toString().length() > 1){
+                if(editName.getText().toString().equals(res.getString(1))){
+                    matches = true;
+                } else {
+                    matches = false;
+                }
+            }
+            if(editPhone.getText().toString().length() > 1){
+                if(editPhone.getText().equals(res.getString(2))){
+                    matches = true;
+                } else {
+                    matches = false;
+                }
+            }
+            if(editAge.getText().toString().length() > 1){
+                if(editPhone.getText().equals(res.getString(2))){
+                    matches = true;
+                } else {
+                    matches = false;
+                }
+            }
+
+            if(matches){
+                sb.append("ID: " + res.getString(0) + "\nName: " + res.getString(1) + "\nPhoneNumber: " + res.getString(2) + "\nAge: " + res.getString(3) +"\n");
+            }
+        }
+        showMessage(sb.toString());
+    }
+
+    private void showMessage(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setMessage(message);
+        builder.show();
     }
 }
