@@ -95,25 +95,19 @@ public class MainActivity extends AppCompatActivity {
 
         StringBuilder sb = new StringBuilder();
         while(res.moveToNext()){
-            boolean matches = false;
+            boolean matches = true;
             if(editName.getText().toString().length() > 1){
-                if(editName.getText().toString().equals(res.getString(1))){
+                if(!editName.getText().toString().equals(res.getString(1))) {
                     matches = true;
-                } else {
-                    matches = false;
                 }
             }
             if(editPhone.getText().toString().length() > 1){
-                if(editPhone.getText().equals(res.getString(2))){
-                    matches = true;
-                } else {
+                if(!editPhone.getText().equals(res.getString(2))){
                     matches = false;
                 }
             }
             if(editAge.getText().toString().length() > 1){
                 if(editPhone.getText().equals(res.getString(2))){
-                    matches = true;
-                } else {
                     matches = false;
                 }
             }

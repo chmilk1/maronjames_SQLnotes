@@ -10,7 +10,7 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     //SQL Properties
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABSE_NAME = "Contact2019.db";
     public static final String TABLE_NAME = "Contact2019_table";
     public static final String ID = "ID";
